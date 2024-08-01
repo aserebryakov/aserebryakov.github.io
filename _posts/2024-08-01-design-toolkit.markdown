@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "My Personal Software Design Toolkit"
-date:   2024-08-02 12:00:47 +0300
+date:   2024-08-01 12:00:47 +0300
 categories: jekyll update
 ---
 
