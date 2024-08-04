@@ -5,11 +5,18 @@ date:   2024-08-01 12:00:47 +0300
 categories: jekyll update
 ---
 
-# Single Source of Truth
+## TL;DR
+
+1. Store your design documentation with the code.
+2. Use Markdown for text.
+3. Use PlantUML or Mermaid for your diagrams (choose the one that can be
+   rendered as part of Markdown in your environment).
+
+## Single Source of Truth
 
 The main idea behind the toolkit is:
 
-> All documentation should be in one place - project repository.
+> All documentation should be in one place - the project repository.
 
 Let me explain it a little.
 
@@ -19,95 +26,100 @@ I used different tools to create software design documents:
  - MS Word
  - Confluence
 
-And when you finish your work on design, you need to answer following questions:
+And when you finish your work on the design, you need to answer the following questions:
+
  - Where to store your design document
- - How to track changes in design document
+ - How to track changes in the design document
 
-## Where to store your design document?
+### Where to store your design document?
 
-There is a number of answers for these questions:
+There are a number of answers to these questions:
 
  - Network drive
  - Cloud storage
  - Document management system
 
-All these answers are valid (Confluence itself is already a storage) but all of
-them require some kind of deviation of your regular workflow.
+All these answers are valid (Confluence itself is already a storage), but all
+of them require some kind of deviation from your regular workflow.
 
-If you're "Onetaskman" like I am, it may be annoying. Especially when you need
-to do a little change after review or you found some detail that requires to be
-updated.
+If you're a "Onetaskman" like me, it may be annoying, especially when you
+need to make a small change after a review or when you find some detail that
+needs to be updated.
 
-## How to track changes in design document?
 
-If it's a MS Word document I used "Track changes" feature that clearly
-represents added/removed/updated text. My usual practice in this case was
-keeping updates list in documents and do not turn it off so latest change stays
-always highlighted.
+### How to track changes in a design document?
 
-So when you update design document you send a copy with latest changes
-highlighted and then store result in your storage.
+If it's an MS Word document, I use the "Track Changes" feature that clearly
+represents added, removed, or updated text. My usual practice in this case was
+to keep the updates list in the document and not turn it off, so the latest
+changes always stay highlighted.
 
-## One place to rule them all
+So, when you update the design document, you send a copy with the latest
+changes highlighted and then store the result in your storage.
 
-As you see, the most of the options require either deviate of your regular
-workflow and remember things that you're not frequently using.
 
-But we have a code repository. It is the most robust part of all systems
-just because of the fact that it is essential for developing a product.
+### One Place to Rule Them All
 
-Many other things can be offline or have any issues that won't allow you to
-add/update the document. I think we're all know how infrastructure migrations
-can become a disaster when no one have access to anything, but even in this
-case code access will be restored in the first place.
+As you see, most of the options require deviating from your regular workflow
+and remembering things that you're not frequently using.
 
-### Design reviews
+But we have a code repository. It is the most robust part of all systems simply
+because it is essential for developing a product.
 
-Design reviews can be made by reviewing a Pull/Merge Request and pushing
-documentation changes to a main developing branch.
+Many other things can be offline or have issues that prevent you from adding or
+updating the document. I think we all know how infrastructure migrations can
+become a disaster when no one has access to anything, but even in this case,
+code access will be restored first.
 
-You automatically know who was reviewing this design, what was changed, and by
-the fact of the presence of the document in main developing branch that 
-this design was accepted.
+#### Design Reviews
 
-# Toolkit components
+Design reviews can be conducted by reviewing a Pull/Merge Request and pushing
+documentation changes to the main development branch.
 
-When we decided that to use the repository as a documentation storage we need
-choose our tools that we will use.
+You automatically know who reviewed this design, what was changed, and by the
+presence of the document in the main development branch, that this design was
+accepted.
 
-## Text
 
-Obviously Markdown is the answer here. 
+## Toolkit components
 
-It provides all necessary tools for our design text part, it is rendered by
-everything and can be read without rendering.
+When we decided to use the repository as documentation storage, we needed to
+choose the tools we would use.
 
-Of course change tracking is trivial.
 
-## Diagrams
+### Text
 
-I have two options in my kit to draw diagrams:
+Obviously, [Markdown](https://daringfireball.net/projects/markdown/) is the
+answer here.
 
- - PlantUML
- - Mermaid
+It provides all the necessary tools for our design text part, it is rendered by
+everything, and it can be read without rendering.
 
-Both of them are text based that makes them easy to update while working on new
-design because. If you need to add e.g. a new participant to a sequence diagram,
-you can put it right in the place without need to fix all arrows manually that
-is really painful in simple graphical editors.
+Of course, change tracking is trivial.
 
-In addition to it IDEs such as `CLion` can propose to update these files when
-you're using `refactor` functionality (when you change a class name for example).
-This fact increases chances of documentation to be up to date when changes are
-made.
 
-There are plugins for IDEs that allow you to integrate them into your workflow
-without a need to use some other software.
+### Diagrams
 
-Of course both PlantUML and Mermaid had advantages and disadvantages while I
-was working with them, so let's dig a bit deeper.
+I have two options in my kit for drawing diagrams:
 
-### Plantuml
+- PlantUML
+- Mermaid
+
+Both are text-based, which makes them easy to update while working on new
+designs. For example, if you need to add a new participant to a sequence
+diagram, you can do so directly without needing to manually adjust all the
+arrows, which can be quite cumbersome in simple graphical editors.
+
+Additionally, IDEs such as `CLion` can propose updates to these files when you
+use the `refactor` functionality (e.g., when you change a class name). This
+feature increases the likelihood that documentation remains up-to-date when
+changes are made.
+
+There are plugins for IDEs that allow you to integrate these tools into your
+workflow without needing additional software.
+
+
+#### Plantuml
 
 [PlantUML](https://plantuml.com/) sequence diagram for a taxi ordering looks
 like:
@@ -174,14 +186,15 @@ else
 end
 ```
 
-The issue that I faced was that PlantUML wasn't natively supported in Git
-platforms that were used at work, thus I had to render diagrams on my own and
-then store rendered images in repo that isn't that good especially when you
-have limited repo size.
+The issue I faced was that PlantUML wasn't natively supported on the Git
+platforms used at work. As a result, I had to render diagrams myself and then
+store the rendered images in the repository, which isn't ideal, especially with
+limited repository size.
 
-On the other hand PlantUML at the moment gives better control over the diagram
-e.g. it is possible to specify where classes will be placed relatively to each
-other like:
+On the other hand, PlantUML currently offers better control over diagrams. For
+example, it is possible to specify the placement of classes relative to each
+other, such as:
+
 
 ```plantuml
 Center -up-> Up
@@ -189,7 +202,7 @@ Center -down-> Down
 Center -left-> Left
 Center -right-> Right
 ```
-Renders to:
+Is rendered as:
 
 ```plantuml!
 Center -up-> Up
@@ -213,10 +226,10 @@ Center -> Left
 Center -> Right
 ```
 
-Another disadvantage is that PlantUML doesn't specify what type of diagram is
-intended, and the result is defined by the content.
+Another disadvantage is that PlantUML doesn't specify the type of diagram
+intended; instead, the result is determined by the content.
 
-### Mermaid
+#### Mermaid
 
 The same diagram of taxi ordering in [Mermaid](https://mermaid.js.org/):
 
@@ -251,7 +264,7 @@ else
 end
 ```
 
-That is rendered to:
+That is rendered as:
 
 ```mermaid!
 sequenceDiagram
@@ -284,15 +297,9 @@ else
 end
 ```
 
-The main advantage of Mermaid that I personally faced was that it had out of
-the box support in GitLab by the time I was using it. That made it my first
-choice for this period.
+The main advantage of Mermaid that I personally experienced was its
+out-of-the-box support in GitLab at the time I was using it. This made it my
+first choice during that period.
 
-As for disadvantages, it has less options at the moment than PlantUML.
+As for disadvantages, Mermaid currently offers fewer options than PlantUML.
 
-# TL;DR
-
-  1. Store your design documentation with the code
-  2. Use Markdown for a text
-  3. Use PlantUML or Mermaid for your diagrams (choose the one that can be
-     rendered as part of Markdown in your environment)
