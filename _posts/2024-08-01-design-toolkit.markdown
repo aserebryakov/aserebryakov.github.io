@@ -12,6 +12,8 @@ categories: jekyll update
 3. Use PlantUML or Mermaid for your diagrams (choose the one that can be
    rendered as part of Markdown in your environment).
 
+But if you want to know why, read further.
+
 ## Single Source of Truth
 
 The main idea behind the toolkit is:
