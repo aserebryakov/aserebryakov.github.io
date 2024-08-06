@@ -9,8 +9,9 @@ categories: jekyll update
 
 1. Store your design documentation with the code.
 2. Use Markdown for text.
-3. Use PlantUML or Mermaid for your diagrams (choose the one that can be
-   rendered as part of Markdown in your environment).
+3. Use [PlantUML](https://plantuml.com/) or [Mermaid](https://mermaid.js.org/)
+   for your diagrams (choose the one that can be rendered as part of Markdown
+   in your environment).
 
 But if you want to know why, read further.
 
@@ -20,11 +21,9 @@ The main idea behind the toolkit is:
 
 > All documentation should be in one place - the project repository.
 
-Let me explain it a little.
-
 I used different tools to create software design documents:
 
- - Pen and paper
+ - Pen and paper ;)
  - MS Word
  - Confluence
 
@@ -121,7 +120,7 @@ There are plugins for IDEs that allow you to integrate these tools into your
 workflow without needing additional software.
 
 
-#### Plantuml
+#### PlantUML
 
 [PlantUML](https://plantuml.com/) sequence diagram for a taxi ordering looks
 like:
@@ -305,3 +304,4 @@ first choice during that period.
 
 As for disadvantages, Mermaid currently offers fewer options than PlantUML.
 
+## Happy Designing!
