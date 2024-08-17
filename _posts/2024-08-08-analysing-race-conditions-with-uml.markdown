@@ -7,23 +7,23 @@ categories: software_design
 
 ## Concurrency Is Hard
 
-Earlier or later each software engineer faces concurrent code execution.
+Sooner or later, every software engineer encounters concurrent code execution.
 
-When there is a concurrency there are race conditions.
+Where there is concurrency, there are race conditions.
 
-Debugging race conditions is sometimes fun, but mostly annoying and painful
-because of their inconsistent nature.
+Debugging race conditions can be fun at times, but it's mostly annoying and
+painful due to their inconsistent nature.
 
-> Best way to avoid debugging race conditions - eliminate them on design stage
+> The best way to avoid debugging race conditions is to eliminate them at the
+> design stage.
 
-In this post I will show you a simple trick that will help you to expose them
-using UML sequence diagrams.
+In this post, I will show you a simple trick that will help you expose race
+conditions using UML sequence diagrams.
 
 ## Example: Incrementing Non-Atomic Value From Several Threads
 
-Let's take a look on the following code example that may appear on job interview
-when you're asked about multithreading.
-
+Let's take a look at the following code example that might come up in a job
+interview when you're asked about multithreading.
 
 ```cpp
 #include <iostream>
@@ -57,22 +57,19 @@ int main() {
 }
 ```
 
-In this program there two threads are spawned and each one increments
-non-atomic counter in a loop. The result is somewhere between 100000 and
-200000.
+In this program, two threads are spawned, and each one increments a non-atomic
+counter in a loop. The result ends up somewhere between 100,000 and 200,000.
 
-It is caused by race condition between threads because `counter++` isn't atomic
-operation in general case.
+This behavior is caused by a race condition between the threads because
+`counter++` is not an atomic operation in the general case.
 
-Now we will expose this race condition.
+Now, let's expose this race condition.
 
 ## UML it!
 
 ### Initial Representation
 
-Let's represent the code in UML sequence diagram. Taking into account that
-increment isn't atomic in our case we split it into several opetations on
-diagram.
+The UML sequence diagram of the code above might look like this:
 
 ```mermaid!
 sequenceDiagram
@@ -88,12 +85,15 @@ par
 end
 ```
 
+Taking into account that the increment isn't atomic in our case, we split it
+into several operations in the diagram.
+
 ### Sequence "Unrolling"
 
-The diagram above is a proper way to represent what is happening in the code,
-but in order to analyze propable timing issues we need to change it.
+The diagram above is an accurate enough representation of what is happening in
+the code, but to analyze potential timing issues, we need to modify it.
 
-Now we will represent the sequence in "unrolled" view:
+Now, we will represent the sequence in an "unrolled" view:
 
 ```mermaid!
 sequenceDiagram
@@ -117,7 +117,7 @@ and
 end
 ```
 
-Now let's remove `par` section
+now we remove `par` section:
 
 ```mermaid!
 sequenceDiagram
@@ -138,7 +138,7 @@ loop 1000 times
 end
 ```
 
-Then we unroll the `loop`.
+then we unroll the `loop`:
 
 ```mermaid!
 sequenceDiagram
@@ -157,8 +157,7 @@ note over Thread2 : increment
 Thread2 ->> Counter : store
 ```
 
-And the final step is starting moving arrows to see which combinations may take
-place.
+and the final step is starting moving arrows to see which combinations may occur:
 
 ```mermaid!
 sequenceDiagram
@@ -176,23 +175,21 @@ Thread1 ->> Counter : store
 Thread2 ->> Counter : store
 ```
 
-We can clearly see that there is a case when the same value is read by two
-threads and each one increments the same value before storing.
+We can clearly see that there is a case where the same value is read by two
+threads, and each one increments the same value before storing it.
 
-Here I represented only one case just for example, but all cases should be
-analyzed when you're designing software.
-
+I've represented only one case here as an example, but all possible cases
+should be analyzed when designing software.
 
 ## Conclusion
 
-As you can see, the "unrolling" is a very straight forward that can be easily
-implemented and doesn't require special skills.
+As you can see, the "unrolling" is very straightforward, easily implemented,
+and doesn't require special skills.
 
-> We can save hours of design time by spending months fixing the implementation
+> We can save hours of design time and spend months fixing the implementation.
 
-Yes, it may be time consuming, but the profit of making it on design stages is
-in the time that will not be spent on trying to debug inconsistant behavior and
-and cost of reliable solution implementation.
-
+Yes, it may be time-consuming, but the benefit of addressing it during the
+design stage is the time saved by not having to debug inconsistent behavior
+later and the reduced cost of implementing a reliable solution.
 
 ## Happy Designing!
