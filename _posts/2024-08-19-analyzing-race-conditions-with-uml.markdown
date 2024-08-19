@@ -1,13 +1,13 @@
 ---
 layout: post
-title:  "Analysing Race Conditions With UML Sequence Diagrams"
-date:   2025-08-11 12:00:47 +0300
+title:  "Analyzing Race Conditions With UML Sequence Diagrams"
+date:   2024-08-19 12:00:47 +0300
 categories: software_design
 ---
 
 ## Concurrency Is Hard
 
-Sooner or later, every software engineer encounters concurrent code execution.
+Sooner or later, every software engineer faces concurrent code execution.
 
 Where there is concurrency, there are race conditions.
 
