@@ -2,7 +2,7 @@
 layout: post
 title:  "How to Dereference a nullptr without Crashing or Why You Should Check Pointers for nullptr"
 date:   2024-07-24 12:00:47 +0300
-categories: jekyll update
+categories: c++
 ---
 
 ## It "Works"

@@ -2,7 +2,7 @@
 layout: post
 title:  "My Personal Software Design Toolkit"
 date:   2024-08-01 12:00:47 +0300
-categories: jekyll update
+categories: software design
 ---
 
 ## TL;DR
