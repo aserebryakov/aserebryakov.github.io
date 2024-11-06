@@ -126,12 +126,13 @@ A bug in the code causes a compilation error, so it most likely doesn't even rea
 
 ## Cons
 
-It can be overwhelming to implement if the `enum class` has a lot of values, and most of the values aren't used.
+ * It can be overwhelming to implement if the `enum class` has a lot of values, and most of the values aren't used.
+ * It requires your code to be compiled with `-Wall -Werror`, which may be problematic for legacy projects.
 
 ## Conclusion
 
 We are always taught to write a `default:` branch in all our `switch` statements. This is good general practice, but as
-we saw in this example, intentionally removing it can save the most precious resource we have — time.
+we saw in this example, there are cases when removing it can help save time and avoid bug handling.
 
 ## Happy Coding!
 
