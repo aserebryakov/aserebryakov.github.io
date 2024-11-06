@@ -7,15 +7,15 @@ categories: c++
 
 ## Intro
 
-I can't remember the source, but there is a general statement:
+I can't remember the source, but there is a general principle:
 
 > Wrong code should not compile.
 
-So in this post I will show a little bit counterintuitive approach to `switch` statement.
+In this post, I’ll show a somewhat counterintuitive approach to the `switch` statement.
 
 ## Example
 
-Now let's take a look on the following example:
+Let's take a look at the following example:
 
 ```cpp
 #include <iostream>
@@ -46,8 +46,8 @@ void printDataType(const std::string& input) {
 }
 ```
 
-For this example we will assume that `parseDataType()` function is defined in a header file supplied by 3rd party 
-library `data_from_string` versioned `v1.0.0`:
+For this example, we will assume that the `parseDataType()` function is defined in a header file 
+provided by the third-party library `data_from_string`, version `v1.0.0`:
 
 ```cpp
 // data_from_string.hpp
@@ -65,7 +65,7 @@ Everything looks and works as expected.
 
 ## Library Upgrade Catch
 
-Now let's assume that maintainer released a new version of the library `v1.1.0` where a new data type was added:
+Now, let's assume that the maintainer released a new version of the library, `v1.1.0`, where a new data type was added:
 
 ```cpp
 // data_from_string.hpp
@@ -80,17 +80,36 @@ enum class DATA_TYPE {
 DATA_TYPE parseDataType(const std::string& input);
 ```
 
-So now instead of `STRING` as we expected before, there is a `DATE_TIME` can be returned. And in our code we'll
-start seeing `Unknown!` appearing in some cases.
+So, instead of `STRING` as we expected before, `DATE_TIME` can be returned. In our code, we’ll start seeing `Unknown!`
+appear in some cases.
 
-This can be either caught by unit tests (in case when we took our thought further than just testing three initial cases),
-but with some probability it can reach QA or even customers.
+This issue can be caught by unit tests (if we considered more than just the initial three cases), but it could also potentially
+reach QA or even customers.
 
 ## Making Code to Fail Early
 
 With an assumption that we use `-Wall -Werror` flags, we can do the following trick: [remove `default:` branch][1].
 
-So when a new value is added to `DATA_TYPE` we'll get warning and compilation error like:
+```cpp
+...
+    switch (type) {
+        case DATA_TYPE::INTEGER: {
+            std::cout << "Integer!";
+            break;
+        }
+        case DATA_TYPE::FLOAT: {
+            std::cout << "Float!";
+            break;
+        }
+        case DATA_TYPE::STRING: {
+            std::cout << "String!";
+            break;
+        }
+        // No default branch
+...
+```
+
+So, when a new value is added to `DATA_TYPE`, we’ll get a compilation error like this:
 
 ```
 main.cpp: In function ‘void printDataType(const std::string&)’:
@@ -99,15 +118,20 @@ main.cpp:15:12: error: enumeration value ‘DATE_TIME’ not handled in switch [
       |            ^
 ```
 
-So immediately we know that this upgrade will require some additional work to be done.
+We immediately know that this upgrade will require some additional work.
 
 ## Pros
 
-Bug in the code causes compilation error, so most probably it doesn't even reach CI reducing the time to bug discovery.
+A bug in the code causes a compilation error, so it most likely doesn't even reach CI, reducing the time to bug discovery.
 
 ## Cons
 
-It cant be overwhelming to implement if the `enum class` has a lot of values and the most of the values aren't used.
+It can be overwhelming to implement if the `enum class` has a lot of values, and most of the values aren't used.
+
+## Conclusion
+
+We are always taught to write a `default:` branch in all our `switch` statements. This is good general practice, but as
+we saw in this example, intentionally removing it can save the most precious resource we have — time.
 
 ## Happy Coding!
 
